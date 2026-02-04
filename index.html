@@ -135,10 +135,10 @@
 </head>
 <body>
 
-<!-- 🎵 MUSIK AUTOPLAY + FADE IN -->
-<audio id="bgMusic" loop>
-    <source src="./lagu_kita.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop playsinline preload="auto">
+    <source src="lagu_kita.mp3" type="audio/mpeg">
 </audio>
+
 
 
 <h1>🤍</h1>
@@ -182,20 +182,15 @@
 </div>
 
 <script>
-/* ================= MUSIK (PASTI BUNYI) ================= */
 const music = document.getElementById("bgMusic");
 
 function startMusic() {
     music.volume = 0.6;
-    music.play().catch(err => console.log(err));
-
-    document.removeEventListener("click", startMusic);
-    document.removeEventListener("touchstart", startMusic);
+    music.play().catch(err => console.log("iOS block:", err));
 }
 
-// JALAN SAAT SENTUH LAYAR PERTAMA (DI MANA AJA)
-document.addEventListener("click", startMusic);
-document.addEventListener("touchstart", startMusic);
+document.addEventListener("touchstart", startMusic, { once: true });
+document.addEventListener("click", startMusic, { once: true });
 
 /* ================= TYPING EFFECT ================= */
 const texts = [
@@ -241,3 +236,4 @@ setInterval(() => {
 
 </body>
 </html>
+
